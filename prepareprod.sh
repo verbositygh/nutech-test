@@ -2,7 +2,6 @@
 
 pnpm init:envskipcheck
 cp prisma/schema.prod.prisma prisma/schema.prisma
-rm .env
 pnpm install 
 rm -rf prisma/migrations 
 mkdir -p prisma/migrations/0_init 
