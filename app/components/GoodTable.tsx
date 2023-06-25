@@ -40,7 +40,7 @@ const GoodTable = () => {
   const [pages, setPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1);
 
-  const searchDebouncer = useCallback(debounce(v => setDebouncedSearch(v), 200), [])
+  const searchDebouncer = debounce(v => setDebouncedSearch(v), 200);
 
   const {
     isLoading,
@@ -125,7 +125,7 @@ const GoodTable = () => {
   }, [isDeleteDialogSpawned])
   useEffect(() => {
     searchDebouncer(search);
-  }, [search]);
+  }, [search, searchDebouncer]);
   return (
     <>
       {
@@ -251,6 +251,7 @@ const GoodTable = () => {
         {
           [...Array(pages)].map((_, p) => (
             <button
+              key={p}
               className={`w-8 h-8 rounded p-2 text-sm flex items-center justify-center ${p + 1 != currentPage ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : 'shadow-xl shadow-indigo-100 border-indigo-200 bg-indigo-600 text-indigo-50'}`}
               disabled={p + 1 == currentPage}
               onClick={() => setCurrentPage(p + 1)}

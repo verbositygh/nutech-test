@@ -15,7 +15,7 @@ const useLogin = () => {
   }, [])
   useEffect(() => {
     setUserLogin(sessionInfo ?? {});
-  }, [sessionInfo])
+  }, [sessionInfo, setUserLogin])
   const login = async () => {
     const doLogin = async () => {
       const generatedId = await (await fetch('/api/users/generateId', { method: 'POST' })).json();

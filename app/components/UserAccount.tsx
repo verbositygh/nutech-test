@@ -12,7 +12,7 @@ const UserAccount = (props: { login: { sessionInfo: any, login: VoidFunction, lo
     const sessionId = sessionInfo?.id;
     typing.changeTargetString(sessionId ?? '');
     typing.handleReplace();
-  }, [props.login.sessionInfo])
+  }, [props.login.sessionInfo, typing])
   return (
     <>
       <h1 className={'text-2xl font-bold mb-2'}>User Account</h1>
