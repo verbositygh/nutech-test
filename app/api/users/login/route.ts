@@ -13,7 +13,9 @@ export async function POST(request: NextRequest) {
   const authToken = await prismaClient.authToken.create({
     data: {
       user: {
-        connect: user,
+        connect: {
+          id: user.id,
+        },
       },
       token: jwt,
     },
