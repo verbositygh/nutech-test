@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { userAuth } from "../lib/atoms/login";
 
 const useLogin = () => {
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [sessionInfo, setSessionInfo] = useState();
   const [_, setUserLogin] = useAtom(userAuth);
   useEffect(() => {
@@ -15,7 +16,7 @@ const useLogin = () => {
   }, [])
   useEffect(() => {
     setUserLogin(sessionInfo ?? {});
-  }, [sessionInfo, setUserLogin])
+  }, [sessionInfo]) // eslint-disable-line react-hooks/exhaustive-deps
   const login = async () => {
     const doLogin = async () => {
       const generatedId = await (await fetch('/api/users/generateId', { method: 'POST' })).json();
@@ -31,7 +32,10 @@ const useLogin = () => {
       return loginData;
     };
 
-    return await doLogin();
+    setIsLoggingIn(true);
+    const loginData = await doLogin();
+    setIsLoggingIn(false);
+    return loginData;
   }
   const logout = async () => {
     await fetch('/api/users/logout', {
@@ -44,7 +48,7 @@ const useLogin = () => {
     localStorage.removeItem('loginData');
     setSessionInfo(undefined);
   }
-  return { sessionInfo, login, logout };
+  return { sessionInfo, login, logout, isLoggingIn };
 }
 
 export default useLogin;

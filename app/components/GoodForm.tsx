@@ -62,7 +62,6 @@ const GoodForm: FC<z.infer<typeof GoodFormProps>> = (props) => {
     })
   }
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
-    console.log(changedData)
     setIsSaving(true);
     event.preventDefault();
     setFormErrors({});

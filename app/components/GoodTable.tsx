@@ -40,10 +40,10 @@ const GoodTable = () => {
   const [pages, setPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1);
 
-  const searchDebouncer = debounce(v => setDebouncedSearch(v), 200);
+  const searchDebouncer = useRef(debounce(v => setDebouncedSearch(v), 400))
 
   const {
-    isLoading,
+    isFetching,
     data,
     refetch,
   } = useQuery<z.infer<typeof QueryReturnType>, Error>({
@@ -124,8 +124,8 @@ const GoodTable = () => {
     deleteDialog.current?.close();
   }, [isDeleteDialogSpawned])
   useEffect(() => {
-    searchDebouncer(search);
-  }, [search, searchDebouncer]);
+    searchDebouncer.current(search);
+  }, [search]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       {
@@ -217,11 +217,11 @@ const GoodTable = () => {
           </thead>
           <tbody className={'text-sm text-gray-700'}>
             {
-              !data?.data.length ? (
+              !data?.data?.length ? (
                 <tr className={'w-full h-16 leading-6 text-center text-sm text-gray-700 overflow-hidden'}>
                   <td colSpan={1000} className={'overflow-hidden'}>
                     {
-                      isLoading ?
+                      isFetching ?
                         <Loader2 size={20} className={'animate-spin w-full flex justify-center'} /> :
                         <span>There is no data in this table</span>
                     }
@@ -249,16 +249,18 @@ const GoodTable = () => {
       </div>
       <div className={'mt-8 flex justify-center'}>
         {
-          [...Array(pages)].map((_, p) => (
-            <button
-              key={p}
-              className={`w-8 h-8 rounded p-2 text-sm flex items-center justify-center ${p + 1 != currentPage ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : 'shadow-xl shadow-indigo-100 border-indigo-200 bg-indigo-600 text-indigo-50'}`}
-              disabled={p + 1 == currentPage}
-              onClick={() => setCurrentPage(p + 1)}
-            >
-              {p + 1}
-            </button>
-          ))
+          data?.data?.length ?
+            [...Array(pages)].map((_, p) => (
+              <button
+                key={p}
+                className={`w-8 h-8 rounded p-2 text-sm flex items-center justify-center ${p + 1 != currentPage ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : 'shadow-xl shadow-indigo-100 border-indigo-200 bg-indigo-600 text-indigo-50'}`}
+                disabled={p + 1 == currentPage}
+                onClick={() => setCurrentPage(p + 1)}
+              >
+                {p + 1}
+              </button>
+            )) :
+            null
         }
       </div>
     </>
