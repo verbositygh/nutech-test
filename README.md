@@ -6,5 +6,7 @@ The stack additionally uses Prisma for ORM, SQLite for database, TanStack Query 
 - Clone this repo with every submodules
 - Run `pnpm install` to install dependencies. If using `pnpm` or replace it with `npm` or `yarn` or any other's equivalent for the rest of the instructions
 - Run `pnpm init:env` to generate `.env` and `.env.local` files
+- Replace database settings on `schema.prisma` to use `sqlite` as its provider or setup another database and recreate the migrations
+- Run `npx prisma generate` to update prisma bindings
 - Run `npx prisma migrate dev` to apply database migrations and seeders
 - Run `pnpm dev` to run the development server
