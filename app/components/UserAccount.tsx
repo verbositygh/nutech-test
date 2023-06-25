@@ -44,10 +44,10 @@ const UserAccount = (props: { login: { sessionInfo: any, login: VoidFunction, lo
       <div className={'text-sm text-red-700'}>
         Note:
         <div>
-          To avoid abuse on the open internet, please generate and login to the new account. Session is not guaranteed to persist so just regenerate if it expires.
+          To avoid abuse on the open internet, please generate and login to a new account. Session is not guaranteed to persist so please just regenerate if the page stops functioning.
         </div>
         <div>
-          Database is server-side but only shown for the authorised user.
+          Database is server-side but the data are filtered per user.
         </div>
       </div>
     </>
