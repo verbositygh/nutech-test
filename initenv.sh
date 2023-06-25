@@ -28,10 +28,10 @@ if [[ "$SKIP_CHECKS" = "n" ]]; then
   done
 fi
 
-if [[ ! -f ".env" ]]
+if [[ ! -f ".env" ]]; then
   cp "./.env.example" "./.env"
 fi
-if [[ ! -f ".env.local" ]]
+if [[ ! -f ".env.local" ]]; then
   cp "./.env.local.example" "./.env.local"
 fi
 
