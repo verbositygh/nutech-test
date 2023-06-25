@@ -34,7 +34,7 @@ const GoodTable = () => {
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const formDialog = useRef<HTMLDialogElement>(null);
   const deleteDialog = useRef<HTMLDialogElement>(null);
-  const [toDelete, setToDelete] = useState<string | null>(null);
+  const [toDelete, setToDelete] = useState<{id: string, name: string} | null>(null);
   const [formId, setFormId] = useState('');
   const [formMode, setFormMode] = useState<FormMode>('create')
   const [formData, setFormData] = useState<z.infer<typeof GoodFormValidation>>(emptyForm);
@@ -89,8 +89,8 @@ const GoodTable = () => {
     setFormData(emptyForm);
     setFormId('');
   }
-  const handleOpenDeleteDialog = (id: string) => {
-    setToDelete(id);
+  const handleOpenDeleteDialog = (id: string, name: string) => {
+    setToDelete({id, name});
     setIsDeleteDialogSpawned(true);
   }
   const handleCloseDeleteDialog = () => {
@@ -141,9 +141,12 @@ const GoodTable = () => {
       {
         isDeleteDialogSpawned ?
           <dialog open={false} ref={deleteDialog} className={'rounded p-8 shadow-2xl'}>
-            <h1 className={'text-gray-900 leading-6 mb-4 text-lg'}>
-              Confirm Deletion of {toDelete}
+            <h1 className={'text-gray-900 leading-6 mb-6 text-lg'}>
+              Confirm Deletion of {toDelete?.name}
             </h1>
+            <div className={'text-gray-800 leading-6 mb-10 text-sm'}>
+              Deletion of item #{toDelete?.id} ({toDelete?.name}) is irreversible. Do you want to continue?
+            </div>
             <div className={'mt-6 flex gap-2'}>
               <button
                 className={'relative btn px-4 py-2 rounded bg-red-700 text-white border-gray-200 border-2 hover:border-red-300 hover:bg-red-800 hover:text-white focus:border-red-300 focus:bg-red-800 focus:text-white outline-0'}
@@ -242,7 +245,7 @@ const GoodTable = () => {
                     <td className={'py-4 px-4 align-middle'}>
                       <div className={'flex gap-2'}>
                         <button onClick={() => handleOpenDialog('update', g, g.id)}><Edit size={20} /></button>
-                        <button onClick={() => handleOpenDeleteDialog(g.id as string)}><Trash2 size={20} /></button>
+                        <button onClick={() => handleOpenDeleteDialog(g.id as string, g.name)}><Trash2 size={20} /></button>
                       </div>
                     </td>
                   </tr>
