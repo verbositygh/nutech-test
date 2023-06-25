@@ -1,0 +1,3 @@
+[submodule "modules/dotenv"]
+	path = modules/dotenv
+	url = https://github.com/bashup/dotenv
