@@ -23,7 +23,6 @@ done
 cp "./.env.example" "./.env"
 cp "./.env.local.example" "./.env.local"
 
-
 .env --file ".env.local"
 .env set JWT_KEY="$RAND_KEY"
 
