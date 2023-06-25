@@ -8,25 +8,28 @@ export async function GET(request: Request) {
   const searchParam: string = params.get('search') ?? '';
   const page = pageParam < 1 ? 1 : pageParam;
   const perPage = 10;
-  const count = await prismaClient.good.count();
-  const goods = await prismaClient.good.findMany({
-    skip: (page - 1) * perPage,
-    take: perPage,
-    where: {
+  const where = {
       userId: uId,
       name: {
         contains: searchParam,
       },
-    },
+    };
+  const count = await prismaClient.good.count({where});
+  const goods = await prismaClient.good.findMany({
+    skip: (page - 1) * perPage,
+    take: perPage,
+    where,
     orderBy: {
       createdAt: 'desc',
     }
   });
+  const pages = Math.ceil(count / perPage);
   return NextResponse.json({
     data: goods,
-    perPage: 10,
-    currentPage: page,
-    pages: Math.ceil(count / perPage),
+    perPage: perPage,
+    currentPage: page > pages ? 1 : page,
+    pages: pages,
+    count
   });
 }
 

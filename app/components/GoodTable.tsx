@@ -22,6 +22,7 @@ const QueryReturnType = z.object({
   perPage: z.number().int(),
   pages: z.number().int(),
   currentPage: z.number().int(),
+  count: z.number().int(),
 });
 
 const GoodTable = () => {
@@ -40,7 +41,10 @@ const GoodTable = () => {
   const [pages, setPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1);
 
-  const searchDebouncer = useRef(debounce(v => setDebouncedSearch(v), 400))
+  const searchDebouncer = useRef(debounce(v => {
+    setDebouncedSearch(v);
+    setCurrentPage(1);
+  }, 400))
 
   const {
     isFetching,
@@ -251,7 +255,7 @@ const GoodTable = () => {
         {
           data?.data?.length ?
             <>
-              <div className={'leading-6 text-sm text-gray-900 text-center mb-4'}>Showing {data?.perPage * (data?.currentPage - 1) + 1} to {data?.perPage * (data?.currentPage - 1) + data?.data.length}</div>
+              <div className={'leading-6 text-sm text-gray-900 text-center mb-4'}>Showing {data?.perPage * (data?.currentPage - 1) + 1} to {data?.perPage * (data?.currentPage - 1) + data?.data.length} of {data?.count} items</div>
               <div className={'flex w-full gap-2 items-center justify-center'}>
                 {
                   [...Array(pages)].map((_, p) => (
