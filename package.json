@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "init:env": "./initenv.sh",
+    "init:envskipcheck": "./initenv.sh --skip-existing-file-check",
     "init:prod": "./prepareprod.sh"
   },
   "prisma": {

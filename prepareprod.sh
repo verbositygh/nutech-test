@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pnpm init:env 
+pnpm init:envskipcheck
 cp prisma/schema.prod.prisma prisma/schema.prisma
 rm .env
 pnpm install 
