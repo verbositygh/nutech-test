@@ -250,16 +250,22 @@ const GoodTable = () => {
       <div className={'mt-8 flex justify-center'}>
         {
           data?.data?.length ?
-            [...Array(pages)].map((_, p) => (
-              <button
-                key={p}
-                className={`w-8 h-8 rounded p-2 text-sm flex items-center justify-center ${p + 1 != currentPage ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : 'shadow-xl shadow-indigo-100 border-indigo-200 bg-indigo-600 text-indigo-50'}`}
-                disabled={p + 1 == currentPage}
-                onClick={() => setCurrentPage(p + 1)}
-              >
-                {p + 1}
-              </button>
-            )) :
+            <>
+              <div className={'leading-6 text-sm text-gray-900 text-center'}>Showing {data?.perPage * data?.currentPage + 1} to {data?.perPage * data?.currentPage + data?.data.length}</div>
+              {
+                [...Array(pages)].map((_, p) => (
+                  <button
+                    key={p}
+                    className={`w-8 h-8 rounded p-2 text-sm flex items-center justify-center ${p + 1 != currentPage ? 'border-indigo-200 bg-indigo-50 text-indigo-700' : 'shadow-xl shadow-indigo-100 border-indigo-200 bg-indigo-600 text-indigo-50'}`}
+                    disabled={p + 1 == currentPage}
+                    onClick={() => setCurrentPage(p + 1)}
+                  >
+                    {p + 1}
+                  </button>
+                ))
+              }
+            </>
+            :
             null
         }
       </div>

@@ -17,13 +17,16 @@ export async function GET(request: Request) {
       name: {
         contains: searchParam,
       },
+    },
+    orderBy: {
+      createdAt: 'desc',
     }
   });
   return NextResponse.json({
     data: goods,
     perPage: 10,
     currentPage: page,
-    pages: Math.floor(count / perPage + 1),
+    pages: Math.ceil(count / perPage),
   });
 }
 

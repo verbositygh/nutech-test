@@ -69,7 +69,9 @@ const GoodForm: FC<z.infer<typeof GoodFormProps>> = (props) => {
     try {
       b64Img = await getImageBase64();
     } catch (e) {
-      setFormErrors(errs => ({ ...errs, itemImage: `${errs.itemImage ?? ''}\n${e ?? 'Image processing failed'}` }))
+      if (e === 'Image file does not exist' && !changedData.image) {
+        setFormErrors(errs => ({ ...errs, itemImage: `${errs.itemImage ?? ''}\n${e ?? 'Image processing failed'}` }))
+      }
     }
     const payload = {
       ...changedData,

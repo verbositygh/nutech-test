@@ -17,6 +17,8 @@ model User {
   id String @id @default(nanoid())
   authTokens AuthToken[]
   goods Good[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model AuthToken {
@@ -24,6 +26,8 @@ model AuthToken {
   token String @unique
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Good {
@@ -35,5 +39,7 @@ model Good {
   image String
   createdBy User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   @@unique([name, userId])
 }
